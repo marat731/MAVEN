@@ -1,0 +1,664 @@
+/* =====================================================
+   MAVEN Internal Tools Directory
+   Styles matching provided mockups
+   ===================================================== */
+
+/* Adobe Fonts - Proxima Nova
+   Replace 'xxxxxxx' with your actual Adobe Fonts project ID
+   in the HTML link tag: https://use.typekit.net/YOUR_ID.css */
+
+:root {
+    --color-bg-dark: #1a1a2e;
+    --color-bg-darker: #16162a;
+    --color-bg-section: #2d2d44;
+    --color-purple: #5b5bd6;
+    --color-purple-light: #7b7bff;
+    --color-purple-glow: rgba(91, 91, 214, 0.6);
+    --color-text-white: #ffffff;
+    --color-text-gray: #a0a0b0;
+    --color-text-muted: #6b6b7b;
+    --color-border: #3d3d5c;
+    --color-card-bg: #363650;
+    --font-family: 'proxima-nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-white);
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* =====================================================
+   ANIMATED CIRCLE / LOGO SECTION
+   ===================================================== */
+
+.logo-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.animated-circle {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-bg {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: var(--color-bg-darker);
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.glow {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.7;
+    z-index: 1;
+}
+
+.glow-1 {
+    background: linear-gradient(135deg, var(--color-purple) 0%, transparent 70%);
+    animation: rotateGlow 8s ease-in-out infinite;
+}
+
+.glow-2 {
+    background: linear-gradient(225deg, var(--color-purple-light) 0%, transparent 70%);
+    animation: rotateGlow 8s ease-in-out infinite reverse;
+    animation-delay: -2s;
+}
+
+.glow-3 {
+    background: linear-gradient(45deg, #4444aa 0%, transparent 70%);
+    animation: pulseGlow 6s ease-in-out infinite;
+    animation-delay: -1s;
+}
+
+@keyframes rotateGlow {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.6;
+    }
+    25% {
+        transform: rotate(15deg) scale(1.05);
+        opacity: 0.8;
+    }
+    50% {
+        transform: rotate(0deg) scale(1.1);
+        opacity: 0.7;
+    }
+    75% {
+        transform: rotate(-15deg) scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0.8;
+    }
+}
+
+.logo-text {
+    position: absolute;
+    font-size: 6rem;
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    z-index: 3;
+    text-align: center;
+    margin-left: 0.3em;
+}
+
+/* =====================================================
+   LOGIN PAGE
+   ===================================================== */
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 360px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    border: none;
+    border-radius: 8px;
+    background: var(--color-text-white);
+    color: #333;
+    outline: none;
+}
+
+.login-form input::placeholder {
+    color: #999;
+}
+
+.login-form input:focus {
+    box-shadow: 0 0 0 3px var(--color-purple-glow);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    font-weight: 600;
+    color: var(--color-text-white);
+    background: var(--color-purple);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.login-btn:hover {
+    background: var(--color-purple-light);
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+}
+
+.login-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.login-links a {
+    color: var(--color-text-white);
+    text-decoration: underline;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.login-links a:hover {
+    color: var(--color-purple-light);
+}
+
+.login-links .divider {
+    color: var(--color-text-gray);
+}
+
+/* Powered By Badge */
+.powered-by {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-gray);
+}
+
+.fe-logo {
+    height: 24px;
+    width: auto;
+}
+
+/* =====================================================
+   DIRECTORY PAGE - HERO
+   ===================================================== */
+
+.directory-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: var(--color-bg-dark);
+}
+
+.hero-section .logo-text {
+    font-size: 8rem;
+}
+
+.hero-section .animated-circle {
+    width: 400px;
+    height: 400px;
+}
+
+.hero-section .circle-bg {
+    width: 350px;
+    height: 350px;
+}
+
+.hero-section .glow {
+    width: 400px;
+    height: 400px;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text-gray);
+    animation: bounce 2s ease-in-out infinite;
+    cursor: pointer;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+
+.powered-by-hero {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+}
+
+/* =====================================================
+   DIRECTORY SECTION
+   ===================================================== */
+
+.directory-section {
+    background: var(--color-bg-section);
+    padding: 4rem 2rem;
+    min-height: 100vh;
+}
+
+.directory-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.welcome-text {
+    display: block;
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    color: var(--color-text-gray);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.directory-header h2 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 1rem 3.5rem 1rem 1.25rem;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-text-white);
+    color: #333;
+    outline: none;
+}
+
+.search-container input::placeholder {
+    color: #999;
+}
+
+.search-container input:focus {
+    border-color: var(--color-purple);
+    box-shadow: 0 0 0 3px var(--color-purple-glow);
+}
+
+.search-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-purple);
+    color: var(--color-text-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.search-btn:hover {
+    background: var(--color-purple-light);
+}
+
+/* =====================================================
+   CATEGORIES
+   ===================================================== */
+
+.categories-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.category {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.category:first-child {
+    border-top: 1px solid var(--color-border);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.category-header:hover {
+    color: var(--color-purple-light);
+}
+
+.category-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.category-header .chevron {
+    transition: transform 0.3s ease;
+}
+
+.category.open .category-header .chevron {
+    transform: rotate(180deg);
+}
+
+.category-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.category.open .category-content {
+    max-height: 2000px;
+    padding-bottom: 2rem;
+}
+
+/* =====================================================
+   TOOL CARDS GRID
+   ===================================================== */
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.tool-card {
+    background: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--color-text-white);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tool-icon {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-text-gray);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.tool-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.tool-card p {
+    font-size: 0.8rem;
+    color: var(--color-text-gray);
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.tool-arrow {
+    color: var(--color-purple);
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.tool-card:hover .tool-arrow {
+    transform: translateX(4px);
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.footer {
+    background: var(--color-text-white);
+    color: #333;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.footer h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #1a1a2e;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    text-align: left;
+}
+
+.contact-item h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1a1a2e;
+}
+
+.contact-item a {
+    display: block;
+    color: var(--color-purple);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+.contact-item span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+/* =====================================================
+   SEARCH RESULTS HIGHLIGHTING
+   ===================================================== */
+
+.tool-card.hidden {
+    display: none;
+}
+
+.tool-card.highlight {
+    box-shadow: 0 0 0 2px var(--color-purple);
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-text-gray);
+    display: none;
+}
+
+.no-results.visible {
+    display: block;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 3.5rem;
+        letter-spacing: 0.2em;
+        margin-left: 0.2em;
+    }
+
+    .animated-circle {
+        width: 220px;
+        height: 220px;
+    }
+
+    .circle-bg {
+        width: 190px;
+        height: 190px;
+    }
+
+    .glow {
+        width: 220px;
+        height: 220px;
+    }
+
+    .hero-section .logo-text {
+        font-size: 4rem;
+    }
+
+    .hero-section .animated-circle {
+        width: 280px;
+        height: 280px;
+    }
+
+    .hero-section .circle-bg {
+        width: 240px;
+        height: 240px;
+    }
+
+    .hero-section .glow {
+        width: 280px;
+        height: 280px;
+    }
+
+    .directory-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        text-align: center;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .tools-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
