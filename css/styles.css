@@ -10,7 +10,7 @@
 :root {
     --color-bg-dark: #181a22;
     --color-bg-darker: #181a22;
-    --color-bg-section: #2d2d44;
+    --color-bg-section: #181a22;
     --color-purple: #3e30f4;
     --color-purple-light: #5a4cff;
     --color-purple-glow: rgba(62, 48, 244, 0.6);
@@ -318,7 +318,7 @@ body {
 }
 
 .fe-logo {
-    height: 24px;
+    height: 20px;
     width: auto;
     display: block;
 }
@@ -344,22 +344,22 @@ body {
 }
 
 .hero-section .logo-text {
-    font-size: 8rem;
+    font-size: 16rem;
 }
 
 .hero-section .animated-circle {
-    width: 400px;
-    height: 400px;
+    width: 800px;
+    height: 800px;
 }
 
 .hero-section .circle-bg {
-    width: 350px;
-    height: 350px;
+    width: 700px;
+    height: 700px;
 }
 
 .hero-section .glow {
-    width: 400px;
-    height: 400px;
+    width: 800px;
+    height: 800px;
 }
 
 .scroll-indicator {
