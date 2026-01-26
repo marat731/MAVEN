@@ -343,25 +343,6 @@ body {
     background: var(--color-bg-dark);
 }
 
-.hero-section .logo-text {
-    font-size: 16rem;
-}
-
-.hero-section .animated-circle {
-    width: 800px;
-    height: 800px;
-}
-
-.hero-section .circle-bg {
-    width: 700px;
-    height: 700px;
-}
-
-.hero-section .glow {
-    width: 800px;
-    height: 800px;
-}
-
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
@@ -414,7 +395,7 @@ body {
 
 .directory-header h2 {
     font-size: 2.5rem;
-    font-weight: 400;
+    font-weight: 700;
     margin-bottom: 2rem;
 }
 
@@ -679,6 +660,26 @@ body {
    RESPONSIVE DESIGN
    ===================================================== */
 
+/* Use fluid sizing for hero section to prevent cutoff */
+.hero-section .logo-text {
+    font-size: clamp(4rem, 12vw, 16rem);
+}
+
+.hero-section .animated-circle {
+    width: clamp(280px, 60vw, 800px);
+    height: clamp(280px, 60vw, 800px);
+}
+
+.hero-section .circle-bg {
+    width: clamp(240px, 52vw, 700px);
+    height: clamp(240px, 52vw, 700px);
+}
+
+.hero-section .glow {
+    width: clamp(280px, 60vw, 800px);
+    height: clamp(280px, 60vw, 800px);
+}
+
 @media (max-width: 768px) {
     .logo-text {
         font-size: 3.5rem;
@@ -699,25 +700,6 @@ body {
     .glow {
         width: 220px;
         height: 220px;
-    }
-
-    .hero-section .logo-text {
-        font-size: 4rem;
-    }
-
-    .hero-section .animated-circle {
-        width: 280px;
-        height: 280px;
-    }
-
-    .hero-section .circle-bg {
-        width: 240px;
-        height: 240px;
-    }
-
-    .hero-section .glow {
-        width: 280px;
-        height: 280px;
     }
 
     .directory-header h2 {
