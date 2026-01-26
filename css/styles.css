@@ -662,7 +662,7 @@ body {
 }
 
 .tool-card.highlight {
-    box-shadow: 0 0 0 2px var(--color-purple);
+    /* Search results - no special styling needed */
 }
 
 .no-results {
