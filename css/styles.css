@@ -560,7 +560,7 @@ body {
 }
 
 .tool-arrow {
-    color: var(--color-purple);
+    color: var(--color-text-white);
     display: flex;
     align-items: center;
     margin-top: 0.5rem;
