@@ -6,6 +6,50 @@
     <title>MAVEN - Predictive Analytics</title>
     <link rel="stylesheet" href="https://use.typekit.net/szf1nyp.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Critical tool page styles - inline backup */
+        .tool-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .tool-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #181a22;
+            border-bottom: 1px solid #3d3d5c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .tool-nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .tool-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .tool-detail-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 4rem;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .tool-detail-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body class="tool-page">
 
