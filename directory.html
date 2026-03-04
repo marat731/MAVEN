@@ -87,5 +87,57 @@
 
     <script src="data/tools.js"></script>
     <script src="js/main.js"></script>
+    <script>
+    // Failsafe: if main.js didn't render categories (caching, load order, etc.), render them now
+    (function() {
+        var container = document.querySelector('.categories-container');
+        if (container && container.querySelectorAll('.category').length === 0) {
+            var data = null;
+            // Try localStorage
+            try {
+                var stored = localStorage.getItem('maven_tools_data');
+                if (stored) {
+                    var parsed = JSON.parse(stored);
+                    if (parsed && parsed.categories && parsed.categories.length > 0) data = parsed;
+                }
+            } catch(e) {}
+            // Try inline global
+            if (!data && typeof MAVEN_TOOLS_DATA !== 'undefined' && MAVEN_TOOLS_DATA.categories && MAVEN_TOOLS_DATA.categories.length > 0) {
+                data = MAVEN_TOOLS_DATA;
+            }
+            // Hardcoded fallback data
+            if (!data) {
+                data = {"categories":[{"id":"strategy-planning","name":"Strategy & Planning","tools":[{"id":"shopper-insights","name":"Shopper Insights","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"audience-builder","name":"Audience Builder","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"ecomm-planning","name":"eComm Planning","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"marketplace-strategy","name":"Marketplace Strategy","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"connections","name":"Connections","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}}]},{"id":"data-analytics","name":"Data & Analytics","tools":[{"id":"competitive-insights","name":"Competitive Insights","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"predictive-analytics","name":"Predictive Analytics","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"measurement-attribution","name":"Measurement & Attribution","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}}]},{"id":"shopper-marketing","name":"Shopper Marketing","tools":[{"id":"concept-builder","name":"Concept Builder","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"retail-best-practices","name":"Retail Best Practices","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"display-engineer","name":"Display Engineer","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"basket-analyzer","name":"Basket Analyzer","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"sales-story-builder","name":"Sales Story Builder","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"pos-best-practices","name":"POS Best Practices","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}}]},{"id":"commerce-media","name":"Commerce Media","tools":[{"id":"media-plan-hq","name":"Media Plan HQ","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"partner-directory","name":"Partner Directory","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"best-practices","name":"Best Practices","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"contextualizer","name":"Contextualizer","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"roi-calculator","name":"ROI Calculator","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}}]},{"id":"creative-content","name":"Creative & Content","tools":[{"id":"idea-generator","name":"Idea Generator","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"visual-evaluator","name":"Visual Evaluator","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"display-generator","name":"Display Generator","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"content-flows","name":"Content Flows","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"storyboard-maker","name":"Storyboard Maker","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"copywriter","name":"Copywriter","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}}]},{"id":"design-production","name":"Design & Production","tools":[{"id":"pdp-generator","name":"PDP Generator","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"execution-scripts","name":"Execution Scripts","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"neurons","name":"Neurons","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"specs-checker","name":"Specs Checker","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}},{"id":"qc-checker","name":"QC Checker","description":"Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.","accessUrl":"#","detail":{"whatItIs":"","whatItDoes":[],"whyItMatters":"","videoUrl":null}}]}]};
+            }
+            // Render directly
+            function esc(text) { var d = document.createElement('div'); d.appendChild(document.createTextNode(text)); return d.innerHTML; }
+            var html = '';
+            data.categories.forEach(function(cat) {
+                html += '<div class="category" data-category="' + esc(cat.id) + '">';
+                html += '<div class="category-header"><h3>' + esc(cat.name) + '</h3>';
+                html += '<svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>';
+                html += '<div class="category-content"><div class="category-content-inner"><div class="tools-grid">';
+                cat.tools.forEach(function(tool) {
+                    html += '<a href="tool.html?id=' + encodeURIComponent(tool.id) + '" class="tool-card">';
+                    html += '<div class="tool-icon"></div>';
+                    html += '<h4>' + esc(tool.name) + '</h4>';
+                    html += '<p>' + esc(tool.description) + '</p>';
+                    html += '<span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>';
+                    html += '</a>';
+                });
+                html += '</div></div></div></div>';
+            });
+            container.innerHTML = html;
+            // Bind toggle events
+            container.querySelectorAll('.category-header').forEach(function(header) {
+                header.addEventListener('click', function() {
+                    this.closest('.category').classList.toggle('open');
+                });
+            });
+            // Re-init search if needed
+            if (typeof initSearch === 'function') initSearch();
+        }
+    })();
+    </script>
 </body>
 </html>
