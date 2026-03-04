@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="https://use.typekit.net/szf1nyp.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        /* Critical tool page styles - inline backup */
+        /* =====================================================
+           TOOL PAGE - ALL STYLES (inline for reliability)
+           ===================================================== */
+
         .tool-page {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
+
+        /* --- NAV --- */
         .tool-nav {
             display: flex;
             align-items: center;
@@ -31,10 +36,94 @@
             text-decoration: none;
             color: #ffffff;
         }
+        .nav-circle {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-circle-bg {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            background: #181a22;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .nav-glow {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .nav-glow-1 {
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                #3e30f4 20deg,
+                transparent 40deg,
+                transparent 180deg,
+                #3e30f4 200deg,
+                transparent 220deg
+            );
+            filter: blur(6px);
+            opacity: 0.9;
+            animation: rotateSunray 20s linear infinite;
+        }
+        .nav-glow-2 {
+            background: radial-gradient(circle at center, #3e30f4 0%, transparent 70%);
+            filter: blur(8px);
+            opacity: 0.4;
+            animation: pulseSunray 4s ease-in-out infinite;
+        }
+        @keyframes rotateSunray {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseSunray {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+        .nav-logo-text {
+            font-size: 1.5rem;
+            font-weight: 100;
+            letter-spacing: 0.25em;
+        }
         .tool-nav-right {
             display: flex;
             align-items: center;
             gap: 1.25rem;
+        }
+        .nav-fe-logo {
+            height: 18px;
+            width: auto;
+            opacity: 0.85;
+        }
+        .nav-user-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid #3d3d5c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0a0b0;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .nav-user-icon:hover {
+            border-color: #3e30f4;
+            color: #ffffff;
+        }
+
+        /* --- DETAIL SECTION --- */
+        .tool-detail {
+            background: #181a22;
+            padding: 3.5rem 2rem 4rem;
         }
         .tool-detail-inner {
             max-width: 1100px;
@@ -44,9 +133,171 @@
             gap: 4rem;
             align-items: start;
         }
+        .tool-breadcrumb {
+            display: block;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #a0a0b0;
+            margin-bottom: 0.75rem;
+        }
+        .tool-breadcrumb a {
+            color: #a0a0b0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .tool-breadcrumb a:hover {
+            color: #ffffff;
+        }
+        .tool-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .tool-access-btn {
+            display: inline-block;
+            padding: 0.75rem 2.5rem;
+            background: #3e30f4;
+            color: #ffffff;
+            font-family: 'proxima-nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-bottom: 2.5rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .tool-access-btn:hover {
+            background: #5a4cff;
+        }
+        .tool-access-btn:active {
+            transform: scale(0.98);
+        }
+        .tool-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .tool-section-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #c9a84c;
+            margin-bottom: 0.6rem;
+        }
+        .tool-section p {
+            font-size: 0.95rem;
+            color: #a0a0b0;
+            line-height: 1.7;
+        }
+        .tool-section ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .tool-section ul li {
+            font-size: 0.95rem;
+            color: #a0a0b0;
+            line-height: 1.6;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        .tool-section ul li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: #3e30f4;
+        }
+
+        /* --- VIDEO PLACEHOLDER --- */
+        .tool-video-wrapper {
+            position: sticky;
+            top: 90px;
+        }
+        .tool-video-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid #3d3d5c;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #a0a0b0;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .tool-video-placeholder:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: #3e30f4;
+        }
+        .video-play-icon {
+            color: #a0a0b0;
+            transition: color 0.2s ease;
+        }
+        .tool-video-placeholder:hover .video-play-icon {
+            color: #ffffff;
+        }
+        .tool-video-placeholder span {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* --- BROWSE SECTION --- */
+        .browse-section {
+            background: #181a22;
+            border-top: 1px solid #3d3d5c;
+            padding: 4rem 2rem;
+        }
+        .browse-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .browse-heading {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .browse-section .search-container {
+            margin-bottom: 2.5rem;
+        }
+        .tool-card--active {
+            border: 1px solid #3e30f4;
+        }
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
             .tool-detail-inner {
                 grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .tool-video-wrapper {
+                position: static;
+                max-width: 500px;
+            }
+            .tool-title {
+                font-size: 2.25rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .tool-nav {
+                padding: 0.75rem 1rem;
+            }
+            .tool-title {
+                font-size: 1.75rem;
+            }
+            .browse-heading {
+                font-size: 1.5rem;
             }
         }
     </style>
