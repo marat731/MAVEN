@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
    ===================================================== */
 
 function fetchToolsData() {
+    // Check localStorage first (set by admin page), fall back to static JSON
+    var stored = localStorage.getItem('maven_tools_data');
+    if (stored) {
+        try {
+            return Promise.resolve(JSON.parse(stored));
+        } catch (e) { /* fall through to fetch */ }
+    }
     return fetch('data/tools.json')
         .then(function(response) { return response.json(); });
 }

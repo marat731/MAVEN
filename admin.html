@@ -306,7 +306,7 @@
 
     <div class="admin-container">
         <div class="admin-notice">
-            <strong>Workflow:</strong> Make your changes below &rarr; click <strong>Export JSON</strong> &rarr; replace <code>data/tools.json</code> in the repo &rarr; push to deploy.
+            <strong>Auto-save enabled.</strong> All changes are saved automatically and appear instantly on the directory. Use <strong>Export JSON</strong> only if you need a backup file.
         </div>
 
         <div class="admin-section">
@@ -393,13 +393,29 @@
     (function() {
         var data = { categories: [] };
 
-        // --- Load data ---
-        fetch('data/tools.json')
-            .then(function(r) { return r.json(); })
-            .then(function(d) {
-                data = d;
-                renderAll();
-            });
+        // --- Auto-save to localStorage ---
+        function autoSave() {
+            localStorage.setItem('maven_tools_data', JSON.stringify(data));
+        }
+
+        // --- Load data (localStorage first, then static JSON) ---
+        (function loadData() {
+            var stored = localStorage.getItem('maven_tools_data');
+            if (stored) {
+                try {
+                    data = JSON.parse(stored);
+                    renderAll();
+                    return;
+                } catch (e) { /* fall through */ }
+            }
+            fetch('data/tools.json')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    data = d;
+                    autoSave();
+                    renderAll();
+                });
+        })();
 
         // --- Slug helper ---
         function toSlug(str) {
@@ -480,6 +496,7 @@
                     if (!cat) return;
                     if (!confirm('Delete category "' + cat.name + '" and all its tools?')) return;
                     data.categories = data.categories.filter(function(c) { return c.id !== catId; });
+                    autoSave();
                     renderAll();
                 });
             });
@@ -504,6 +521,7 @@
                     if (!tool) return;
                     if (!confirm('Delete tool "' + tool.name + '"?')) return;
                     cat.tools = cat.tools.filter(function(t) { return t.id !== toolId; });
+                    autoSave();
                     renderAll();
                 });
             });
@@ -545,6 +563,7 @@
             }
 
             document.getElementById('categoryFormOverlay').classList.remove('active');
+            autoSave();
             renderAll();
         });
 
@@ -704,6 +723,7 @@
             }
 
             document.getElementById('toolFormOverlay').classList.remove('active');
+            autoSave();
             renderAll();
         });
 
