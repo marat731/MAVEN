@@ -726,3 +726,339 @@ body {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* =====================================================
+   TOOL PAGE - NAV
+   ===================================================== */
+
+.tool-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.tool-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: var(--color-bg-dark);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.tool-nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--color-text-white);
+}
+
+/* Small animated circle in nav */
+.nav-circle {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nav-circle-bg {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background: var(--color-bg-dark);
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.nav-glow {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.nav-glow-1 {
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        var(--color-purple) 20deg,
+        transparent 40deg,
+        transparent 180deg,
+        var(--color-purple) 200deg,
+        transparent 220deg
+    );
+    filter: blur(6px);
+    opacity: 0.9;
+    animation: rotateSunray 20s linear infinite;
+}
+
+.nav-glow-2 {
+    background: radial-gradient(circle at center, var(--color-purple) 0%, transparent 70%);
+    filter: blur(8px);
+    opacity: 0.4;
+    animation: pulseSunray 4s ease-in-out infinite;
+}
+
+.nav-logo-text {
+    font-size: 1.5rem;
+    font-weight: 100;
+    letter-spacing: 0.25em;
+}
+
+.tool-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.nav-fe-logo {
+    height: 18px;
+    width: auto;
+    opacity: 0.85;
+}
+
+.nav-user-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-gray);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-user-icon:hover {
+    border-color: var(--color-purple);
+    color: var(--color-text-white);
+}
+
+/* =====================================================
+   TOOL PAGE - DETAIL SECTION
+   ===================================================== */
+
+.tool-detail {
+    background: var(--color-bg-dark);
+    padding: 3.5rem 2rem 4rem;
+}
+
+.tool-detail-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Left column */
+.tool-breadcrumb {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-gray);
+    margin-bottom: 0.75rem;
+}
+
+.tool-breadcrumb a {
+    color: var(--color-text-gray);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tool-breadcrumb a:hover {
+    color: var(--color-text-white);
+}
+
+.tool-title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.tool-access-btn {
+    display: inline-block;
+    padding: 0.75rem 2.5rem;
+    background: var(--color-purple);
+    color: var(--color-text-white);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-bottom: 2.5rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.tool-access-btn:hover {
+    background: var(--color-purple-light);
+}
+
+.tool-access-btn:active {
+    transform: scale(0.98);
+}
+
+.tool-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tool-section-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    margin-bottom: 0.6rem;
+}
+
+.tool-section p {
+    font-size: 0.95rem;
+    color: var(--color-text-gray);
+    line-height: 1.7;
+}
+
+.tool-section ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.tool-section ul li {
+    font-size: 0.95rem;
+    color: var(--color-text-gray);
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.tool-section ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--color-purple);
+}
+
+/* Right column: video */
+.tool-video-wrapper {
+    position: sticky;
+    top: 90px;
+}
+
+.tool-video-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--color-text-gray);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.tool-video-placeholder:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: var(--color-purple);
+}
+
+.video-play-icon {
+    color: var(--color-text-gray);
+    transition: color 0.2s ease;
+}
+
+.tool-video-placeholder:hover .video-play-icon {
+    color: var(--color-text-white);
+}
+
+.tool-video-placeholder span {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* =====================================================
+   TOOL PAGE - BROWSE SECTION
+   ===================================================== */
+
+.browse-section {
+    background: var(--color-bg-dark);
+    border-top: 1px solid var(--color-border);
+    padding: 4rem 2rem;
+}
+
+.browse-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.browse-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.browse-section .search-container {
+    margin-bottom: 2.5rem;
+}
+
+/* Active tool card state */
+.tool-card--active {
+    border: 1px solid var(--color-purple);
+}
+
+/* =====================================================
+   TOOL PAGE - RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 900px) {
+    .tool-detail-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .tool-video-wrapper {
+        position: static;
+        max-width: 500px;
+    }
+
+    .tool-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .tool-nav {
+        padding: 0.75rem 1rem;
+    }
+
+    .tool-title {
+        font-size: 1.75rem;
+    }
+
+    .browse-heading {
+        font-size: 1.5rem;
+    }
+}
