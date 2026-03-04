@@ -30,9 +30,10 @@
             z-index: 100;
         }
         .tool-nav-logo {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
             text-decoration: none;
             color: #ffffff;
         }
@@ -51,14 +52,14 @@
             height: 36px;
             background: #181a22;
             border-radius: 50%;
-            z-index: 2;
+            z-index: 1;
         }
         .nav-glow {
             position: absolute;
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            z-index: 1;
+            z-index: 0;
         }
         .nav-glow-1 {
             background: conic-gradient(
@@ -89,9 +90,16 @@
             50% { transform: scale(1.15); opacity: 0.7; }
         }
         .nav-logo-text {
-            font-size: 1.5rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.5rem;
             font-weight: 100;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.15em;
+            z-index: 2;
+            white-space: nowrap;
+            margin-left: 0.075em;
         }
         .tool-nav-right {
             display: flex;
@@ -186,7 +194,7 @@
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #c9a84c;
+            color: #e8fe53;
             margin-bottom: 0.6rem;
         }
         .tool-section p {
