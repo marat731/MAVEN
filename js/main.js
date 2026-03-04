@@ -22,13 +22,21 @@ document.addEventListener('DOMContentLoaded', function() {
    ===================================================== */
 
 function fetchToolsData() {
-    // Check localStorage first (set by admin page), fall back to static JSON
+    // 1. Check localStorage first (set by admin page)
     var stored = localStorage.getItem('maven_tools_data');
     if (stored) {
         try {
-            return Promise.resolve(JSON.parse(stored));
-        } catch (e) { /* fall through to fetch */ }
+            var parsed = JSON.parse(stored);
+            if (parsed && parsed.categories && parsed.categories.length > 0) {
+                return Promise.resolve(parsed);
+            }
+        } catch (e) { /* fall through */ }
     }
+    // 2. Use inline script data (tools.js) — works on file:// and avoids fetch issues
+    if (typeof MAVEN_TOOLS_DATA !== 'undefined' && MAVEN_TOOLS_DATA.categories) {
+        return Promise.resolve(MAVEN_TOOLS_DATA);
+    }
+    // 3. Last resort: fetch from JSON file
     return fetch('data/tools.json')
         .then(function(response) { return response.json(); });
 }
