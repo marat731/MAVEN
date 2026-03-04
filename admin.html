@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAVEN - Admin</title>
+    <link rel="stylesheet" href="https://use.typekit.net/szf1nyp.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .admin-page {
+            min-height: 100vh;
+            background: #181a22;
+            color: #ffffff;
+            font-family: 'proxima-nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .admin-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #181a22;
+            border-bottom: 1px solid #3d3d5c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .admin-nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .admin-nav-left a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 100;
+            letter-spacing: 0.25em;
+        }
+        .admin-nav-left span {
+            font-size: 0.85rem;
+            color: #a0a0b0;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .admin-nav-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .admin-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-notice {
+            background: rgba(62, 48, 244, 0.15);
+            border: 1px solid #3e30f4;
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #a0a0b0;
+            line-height: 1.6;
+        }
+        .admin-notice strong {
+            color: #e8fe53;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.25rem;
+            font-size: 0.85rem;
+            font-family: inherit;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary {
+            background: #3e30f4;
+            color: #ffffff;
+        }
+        .btn-primary:hover { background: #5a4cff; }
+        .btn-secondary {
+            background: #363650;
+            color: #ffffff;
+        }
+        .btn-secondary:hover { background: #45457a; }
+        .btn-danger {
+            background: transparent;
+            color: #ff5c5c;
+            border: 1px solid #ff5c5c;
+        }
+        .btn-danger:hover { background: rgba(255, 92, 92, 0.15); }
+        .btn-sm {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+        }
+        .btn-export {
+            background: #e8fe53;
+            color: #181a22;
+        }
+        .btn-export:hover { background: #d4eb3f; }
+
+        /* Section headings */
+        .admin-section {
+            margin-bottom: 2.5rem;
+        }
+        .admin-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .admin-section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* Category block */
+        .admin-category {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid #3d3d5c;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .admin-category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .admin-category-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .admin-category-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .admin-category-header .cat-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .admin-category-header .cat-actions .tool-count {
+            font-size: 0.8rem;
+            color: #a0a0b0;
+            margin-right: 0.5rem;
+        }
+        .admin-category-body {
+            display: none;
+            padding: 0 1.25rem 1.25rem;
+        }
+        .admin-category.open .admin-category-body {
+            display: block;
+        }
+
+        /* Tool row */
+        .admin-tool-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .admin-tool-row .tool-info-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .admin-tool-row .tool-info-text h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+        .admin-tool-row .tool-info-text p {
+            font-size: 0.8rem;
+            color: #a0a0b0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .admin-tool-row .tool-row-actions {
+            display: flex;
+            gap: 0.4rem;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        /* Forms */
+        .admin-form-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-form-overlay.active {
+            display: flex;
+        }
+        .admin-form-panel {
+            background: #1e2030;
+            border: 1px solid #3d3d5c;
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .admin-form-panel h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #a0a0b0;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #181a22;
+            color: #ffffff;
+            border: 1px solid #3d3d5c;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #3e30f4;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-group .help-text {
+            font-size: 0.78rem;
+            color: #6b6b7b;
+            margin-top: 0.3rem;
+        }
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        /* What It Does dynamic fields */
+        .what-it-does-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .what-it-does-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .what-it-does-item input {
+            flex: 1;
+        }
+        .btn-add-item {
+            align-self: flex-start;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body class="admin-page">
+
+    <!-- Nav -->
+    <nav class="admin-nav">
+        <div class="admin-nav-left">
+            <a href="directory.html">MAVEN</a>
+            <span>Admin</span>
+        </div>
+        <div class="admin-nav-actions">
+            <button class="btn btn-export" id="exportBtn">Export JSON</button>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-notice">
+            <strong>Workflow:</strong> Make your changes below &rarr; click <strong>Export JSON</strong> &rarr; replace <code>data/tools.json</code> in the repo &rarr; push to deploy.
+        </div>
+
+        <div class="admin-section">
+            <div class="admin-section-header">
+                <h2>Categories &amp; Tools</h2>
+                <div style="display:flex;gap:0.5rem;">
+                    <button class="btn btn-secondary" id="addCategoryBtn">+ Add Category</button>
+                    <button class="btn btn-primary" id="addToolBtn">+ Add Tool</button>
+                </div>
+            </div>
+            <div id="categoriesList"></div>
+        </div>
+    </div>
+
+    <!-- Category Form Overlay -->
+    <div class="admin-form-overlay" id="categoryFormOverlay">
+        <div class="admin-form-panel">
+            <h2 id="categoryFormTitle">Add Category</h2>
+            <form id="categoryForm">
+                <input type="hidden" id="catEditId" value="">
+                <div class="form-group">
+                    <label for="catName">Category Name</label>
+                    <input type="text" id="catName" required placeholder="e.g. Strategy & Planning">
+                    <div class="help-text">The slug ID will be generated automatically from the name.</div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="catCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="catSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tool Form Overlay -->
+    <div class="admin-form-overlay" id="toolFormOverlay">
+        <div class="admin-form-panel">
+            <h2 id="toolFormTitle">Add Tool</h2>
+            <form id="toolForm">
+                <input type="hidden" id="toolEditId" value="">
+                <input type="hidden" id="toolEditCatId" value="">
+                <div class="form-group">
+                    <label for="toolCategory">Category</label>
+                    <select id="toolCategory" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="toolName">Tool Name</label>
+                    <input type="text" id="toolName" required placeholder="e.g. Predictive Analytics">
+                </div>
+                <div class="form-group">
+                    <label for="toolDesc">Short Description</label>
+                    <input type="text" id="toolDesc" required placeholder="Brief description for the card">
+                </div>
+                <div class="form-group">
+                    <label for="toolAccessUrl">Access URL</label>
+                    <input type="text" id="toolAccessUrl" placeholder="https://..." value="#">
+                </div>
+                <div class="form-group">
+                    <label for="toolWhatItIs">What It Is</label>
+                    <textarea id="toolWhatItIs" rows="3" placeholder="Paragraph describing what the tool is"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>What It Does</label>
+                    <div class="what-it-does-list" id="whatItDoesList"></div>
+                    <button type="button" class="btn btn-secondary btn-sm btn-add-item" id="addWhatItDoesBtn">+ Add Item</button>
+                    <div class="help-text">One bullet point per field. Click + to add more.</div>
+                </div>
+                <div class="form-group">
+                    <label for="toolWhyItMatters">Why It Matters</label>
+                    <textarea id="toolWhyItMatters" rows="3" placeholder="Paragraph explaining why the tool matters"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="toolVideoUrl">Video URL (optional)</label>
+                    <input type="text" id="toolVideoUrl" placeholder="https://...">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="toolCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="toolSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var data = { categories: [] };
+
+        // --- Load data ---
+        fetch('data/tools.json')
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                data = d;
+                renderAll();
+            });
+
+        // --- Slug helper ---
+        function toSlug(str) {
+            return str.toLowerCase().replace(/&/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
+        // --- Render categories list ---
+        function renderAll() {
+            var container = document.getElementById('categoriesList');
+            var html = '';
+            data.categories.forEach(function(cat) {
+                html += '<div class="admin-category" data-cat-id="' + cat.id + '">';
+                html += '<div class="admin-category-header">';
+                html += '<h3>' + escapeHtml(cat.name) + '</h3>';
+                html += '<div class="cat-actions">';
+                html += '<span class="tool-count">' + cat.tools.length + ' tool' + (cat.tools.length !== 1 ? 's' : '') + '</span>';
+                html += '<button class="btn btn-secondary btn-sm edit-cat-btn" data-cat-id="' + cat.id + '">Edit</button>';
+                html += '<button class="btn btn-danger btn-sm delete-cat-btn" data-cat-id="' + cat.id + '">Delete</button>';
+                html += '</div></div>';
+                html += '<div class="admin-category-body">';
+                cat.tools.forEach(function(tool) {
+                    html += '<div class="admin-tool-row" data-tool-id="' + tool.id + '">';
+                    html += '<div class="tool-info-text"><h4>' + escapeHtml(tool.name) + '</h4>';
+                    html += '<p>' + escapeHtml(tool.description) + '</p></div>';
+                    html += '<div class="tool-row-actions">';
+                    html += '<button class="btn btn-secondary btn-sm edit-tool-btn" data-tool-id="' + tool.id + '" data-cat-id="' + cat.id + '">Edit</button>';
+                    html += '<button class="btn btn-danger btn-sm delete-tool-btn" data-tool-id="' + tool.id + '" data-cat-id="' + cat.id + '">Delete</button>';
+                    html += '</div></div>';
+                });
+                if (cat.tools.length === 0) {
+                    html += '<p style="color:#6b6b7b;font-size:0.85rem;padding:0.5rem 0;">No tools in this category yet.</p>';
+                }
+                html += '</div></div>';
+            });
+            if (data.categories.length === 0) {
+                html = '<p style="color:#6b6b7b;text-align:center;padding:2rem;">No categories yet. Click "Add Category" to get started.</p>';
+            }
+            container.innerHTML = html;
+            bindEvents();
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(text));
+            return div.innerHTML;
+        }
+
+        // --- Bind click events ---
+        function bindEvents() {
+            // Toggle category bodies
+            document.querySelectorAll('.admin-category-header').forEach(function(header) {
+                header.addEventListener('click', function(e) {
+                    if (e.target.closest('button')) return;
+                    this.closest('.admin-category').classList.toggle('open');
+                });
+            });
+
+            // Edit category
+            document.querySelectorAll('.edit-cat-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var catId = this.getAttribute('data-cat-id');
+                    var cat = data.categories.find(function(c) { return c.id === catId; });
+                    if (!cat) return;
+                    document.getElementById('categoryFormTitle').textContent = 'Edit Category';
+                    document.getElementById('catEditId').value = cat.id;
+                    document.getElementById('catName').value = cat.name;
+                    document.getElementById('categoryFormOverlay').classList.add('active');
+                });
+            });
+
+            // Delete category
+            document.querySelectorAll('.delete-cat-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var catId = this.getAttribute('data-cat-id');
+                    var cat = data.categories.find(function(c) { return c.id === catId; });
+                    if (!cat) return;
+                    if (!confirm('Delete category "' + cat.name + '" and all its tools?')) return;
+                    data.categories = data.categories.filter(function(c) { return c.id !== catId; });
+                    renderAll();
+                });
+            });
+
+            // Edit tool
+            document.querySelectorAll('.edit-tool-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var toolId = this.getAttribute('data-tool-id');
+                    var catId = this.getAttribute('data-cat-id');
+                    openToolForm(toolId, catId);
+                });
+            });
+
+            // Delete tool
+            document.querySelectorAll('.delete-tool-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var toolId = this.getAttribute('data-tool-id');
+                    var catId = this.getAttribute('data-cat-id');
+                    var cat = data.categories.find(function(c) { return c.id === catId; });
+                    if (!cat) return;
+                    var tool = cat.tools.find(function(t) { return t.id === toolId; });
+                    if (!tool) return;
+                    if (!confirm('Delete tool "' + tool.name + '"?')) return;
+                    cat.tools = cat.tools.filter(function(t) { return t.id !== toolId; });
+                    renderAll();
+                });
+            });
+        }
+
+        // --- Category form ---
+        document.getElementById('addCategoryBtn').addEventListener('click', function() {
+            document.getElementById('categoryFormTitle').textContent = 'Add Category';
+            document.getElementById('catEditId').value = '';
+            document.getElementById('catName').value = '';
+            document.getElementById('categoryFormOverlay').classList.add('active');
+        });
+
+        document.getElementById('catCancelBtn').addEventListener('click', function() {
+            document.getElementById('categoryFormOverlay').classList.remove('active');
+        });
+
+        document.getElementById('categoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var editId = document.getElementById('catEditId').value;
+            var name = document.getElementById('catName').value.trim();
+            if (!name) return;
+
+            if (editId) {
+                var cat = data.categories.find(function(c) { return c.id === editId; });
+                if (cat) {
+                    cat.name = name;
+                }
+            } else {
+                var newId = toSlug(name);
+                // Ensure unique ID
+                var base = newId;
+                var counter = 2;
+                while (data.categories.some(function(c) { return c.id === newId; })) {
+                    newId = base + '-' + counter;
+                    counter++;
+                }
+                data.categories.push({ id: newId, name: name, tools: [] });
+            }
+
+            document.getElementById('categoryFormOverlay').classList.remove('active');
+            renderAll();
+        });
+
+        // --- Tool form ---
+        function populateCategorySelect(selectedCatId) {
+            var select = document.getElementById('toolCategory');
+            select.innerHTML = '';
+            data.categories.forEach(function(cat) {
+                var opt = document.createElement('option');
+                opt.value = cat.id;
+                opt.textContent = cat.name;
+                if (cat.id === selectedCatId) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        function addWhatItDoesField(value) {
+            var list = document.getElementById('whatItDoesList');
+            var item = document.createElement('div');
+            item.className = 'what-it-does-item';
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.value = value || '';
+            input.placeholder = 'Bullet point text';
+            var removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'btn btn-danger btn-sm';
+            removeBtn.textContent = 'X';
+            removeBtn.addEventListener('click', function() { item.remove(); });
+            item.appendChild(input);
+            item.appendChild(removeBtn);
+            list.appendChild(item);
+        }
+
+        document.getElementById('addWhatItDoesBtn').addEventListener('click', function() {
+            addWhatItDoesField('');
+        });
+
+        function openToolForm(toolId, catId) {
+            populateCategorySelect(catId);
+            document.getElementById('toolEditId').value = '';
+            document.getElementById('toolEditCatId').value = '';
+            document.getElementById('toolName').value = '';
+            document.getElementById('toolDesc').value = '';
+            document.getElementById('toolAccessUrl').value = '#';
+            document.getElementById('toolWhatItIs').value = '';
+            document.getElementById('whatItDoesList').innerHTML = '';
+            document.getElementById('toolWhyItMatters').value = '';
+            document.getElementById('toolVideoUrl').value = '';
+
+            if (toolId && catId) {
+                // Editing existing tool
+                document.getElementById('toolFormTitle').textContent = 'Edit Tool';
+                document.getElementById('toolEditId').value = toolId;
+                document.getElementById('toolEditCatId').value = catId;
+                var cat = data.categories.find(function(c) { return c.id === catId; });
+                if (cat) {
+                    var tool = cat.tools.find(function(t) { return t.id === toolId; });
+                    if (tool) {
+                        document.getElementById('toolCategory').value = catId;
+                        document.getElementById('toolName').value = tool.name;
+                        document.getElementById('toolDesc').value = tool.description;
+                        document.getElementById('toolAccessUrl').value = tool.accessUrl;
+                        document.getElementById('toolWhatItIs').value = tool.detail.whatItIs;
+                        tool.detail.whatItDoes.forEach(function(item) {
+                            addWhatItDoesField(item);
+                        });
+                        document.getElementById('toolWhyItMatters').value = tool.detail.whyItMatters;
+                        document.getElementById('toolVideoUrl').value = tool.detail.videoUrl || '';
+                    }
+                }
+            } else {
+                document.getElementById('toolFormTitle').textContent = 'Add Tool';
+                addWhatItDoesField('');
+            }
+
+            document.getElementById('toolFormOverlay').classList.add('active');
+        }
+
+        document.getElementById('addToolBtn').addEventListener('click', function() {
+            if (data.categories.length === 0) {
+                alert('Please add a category first.');
+                return;
+            }
+            openToolForm(null, null);
+        });
+
+        document.getElementById('toolCancelBtn').addEventListener('click', function() {
+            document.getElementById('toolFormOverlay').classList.remove('active');
+        });
+
+        document.getElementById('toolForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var editId = document.getElementById('toolEditId').value;
+            var editCatId = document.getElementById('toolEditCatId').value;
+            var targetCatId = document.getElementById('toolCategory').value;
+            var name = document.getElementById('toolName').value.trim();
+            var desc = document.getElementById('toolDesc').value.trim();
+            var accessUrl = document.getElementById('toolAccessUrl').value.trim() || '#';
+            var whatItIs = document.getElementById('toolWhatItIs').value.trim();
+            var whyItMatters = document.getElementById('toolWhyItMatters').value.trim();
+            var videoUrl = document.getElementById('toolVideoUrl').value.trim() || null;
+
+            // Gather what-it-does items
+            var whatItDoes = [];
+            document.querySelectorAll('#whatItDoesList .what-it-does-item input').forEach(function(input) {
+                var val = input.value.trim();
+                if (val) whatItDoes.push(val);
+            });
+
+            if (!name || !desc) return;
+
+            var toolObj = {
+                id: editId || toSlug(name),
+                name: name,
+                description: desc,
+                accessUrl: accessUrl,
+                detail: {
+                    whatItIs: whatItIs,
+                    whatItDoes: whatItDoes,
+                    whyItMatters: whyItMatters,
+                    videoUrl: videoUrl
+                }
+            };
+
+            if (editId) {
+                // Remove from old category if category changed
+                if (editCatId && editCatId !== targetCatId) {
+                    var oldCat = data.categories.find(function(c) { return c.id === editCatId; });
+                    if (oldCat) {
+                        oldCat.tools = oldCat.tools.filter(function(t) { return t.id !== editId; });
+                    }
+                    var newCat = data.categories.find(function(c) { return c.id === targetCatId; });
+                    if (newCat) newCat.tools.push(toolObj);
+                } else {
+                    // Update in place
+                    var cat = data.categories.find(function(c) { return c.id === targetCatId; });
+                    if (cat) {
+                        var idx = cat.tools.findIndex(function(t) { return t.id === editId; });
+                        if (idx >= 0) {
+                            cat.tools[idx] = toolObj;
+                        }
+                    }
+                }
+            } else {
+                // Ensure unique ID within category
+                var targetCat = data.categories.find(function(c) { return c.id === targetCatId; });
+                if (targetCat) {
+                    var baseId = toolObj.id;
+                    var counter = 2;
+                    while (targetCat.tools.some(function(t) { return t.id === toolObj.id; })) {
+                        toolObj.id = baseId + '-' + counter;
+                        counter++;
+                    }
+                    targetCat.tools.push(toolObj);
+                }
+            }
+
+            document.getElementById('toolFormOverlay').classList.remove('active');
+            renderAll();
+        });
+
+        // --- Export ---
+        document.getElementById('exportBtn').addEventListener('click', function() {
+            var json = JSON.stringify(data, null, 2);
+            var blob = new Blob([json], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'tools.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Close overlays on background click
+        document.querySelectorAll('.admin-form-overlay').forEach(function(overlay) {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

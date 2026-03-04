@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAVEN - Predictive Analytics</title>
+    <title>MAVEN - Tool</title>
     <link rel="stylesheet" href="https://use.typekit.net/szf1nyp.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
@@ -339,42 +339,17 @@
         </div>
     </nav>
 
-    <!-- Tool Detail Section -->
+    <!-- Tool Detail Section (dynamically populated) -->
     <section class="tool-detail">
         <div class="tool-detail-inner">
-
-            <!-- Left Column: Tool Info -->
             <div class="tool-info">
                 <span class="tool-breadcrumb">
-                    <a href="directory.html">Data &amp; Analytics</a>
+                    <a href="directory.html" id="breadcrumbLink"></a>
                 </span>
-                <h1 class="tool-title">Predictive Analytics</h1>
-                <a href="#" class="tool-access-btn">ACCESS</a>
-
-                <div class="tool-content">
-                    <div class="tool-section">
-                        <span class="tool-section-label">What it is:</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-                    </div>
-
-                    <div class="tool-section">
-                        <span class="tool-section-label">What it does:</span>
-                        <ul>
-                            <li>Analyzes historical data to forecast future trends and behaviors</li>
-                            <li>Identifies patterns across your customer and sales data</li>
-                            <li>Generates actionable recommendations with confidence scores</li>
-                            <li>Integrates with your existing data sources and workflows</li>
-                        </ul>
-                    </div>
-
-                    <div class="tool-section">
-                        <span class="tool-section-label">Why it matters:</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    </div>
-                </div>
+                <h1 class="tool-title" id="toolTitle"></h1>
+                <a href="#" class="tool-access-btn" id="toolAccessBtn">ACCESS</a>
+                <div class="tool-content" id="toolContent"></div>
             </div>
-
-            <!-- Right Column: Video Placeholder -->
             <div class="tool-video-wrapper">
                 <div class="tool-video-placeholder">
                     <div class="video-play-icon">
@@ -386,7 +361,6 @@
                     <span>Watch Demo</span>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -394,7 +368,6 @@
     <section class="browse-section">
         <div class="browse-inner">
             <h2 class="browse-heading">Looking for something else?</h2>
-
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search all tools">
                 <button class="search-btn" id="scrollTopBtn">
@@ -404,133 +377,8 @@
                     </svg>
                 </button>
             </div>
-
             <div class="categories-container">
-                <!-- Strategy & Planning -->
-                <div class="category" data-category="strategy-planning">
-                    <div class="category-header">
-                        <h3>Strategy &amp; Planning</h3>
-                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-content-inner">
-                            <div class="tools-grid">
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Shopper Insights</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Audience Builder</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>eComm Planning</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Marketplace Strategy</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Connections</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Data & Analytics -->
-                <div class="category" data-category="data-analytics">
-                    <div class="category-header">
-                        <h3>Data &amp; Analytics</h3>
-                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-content-inner">
-                            <div class="tools-grid">
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Competitive Insights</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card tool-card--active"><div class="tool-icon"></div><h4>Predictive Analytics</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Measurement &amp; Attribution</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Shopper Marketing -->
-                <div class="category" data-category="shopper-marketing">
-                    <div class="category-header">
-                        <h3>Shopper Marketing</h3>
-                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-content-inner">
-                            <div class="tools-grid">
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Concept Builder</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Retail Best Practices</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Display Engineer</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Basket Analyzer</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Sales Story Builder</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>POS Best Practices</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Commerce Media -->
-                <div class="category" data-category="commerce-media">
-                    <div class="category-header">
-                        <h3>Commerce Media</h3>
-                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-content-inner">
-                            <div class="tools-grid">
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Media Plan HQ</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Partner Directory</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Best Practices</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Contextualizer</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>ROI Calculator</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Creative & Content -->
-                <div class="category" data-category="creative-content">
-                    <div class="category-header">
-                        <h3>Creative &amp; Content</h3>
-                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-content-inner">
-                            <div class="tools-grid">
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Idea Generator</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Visual Evaluator</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Display Generator</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Content Flows</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Storyboard Maker</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Copywriter</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Design & Production -->
-                <div class="category" data-category="design-production">
-                    <div class="category-header">
-                        <h3>Design &amp; Production</h3>
-                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-content-inner">
-                            <div class="tools-grid">
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>PDP Generator</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Execution Scripts</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Neurons</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>Specs Checker</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                                <a href="tool.html" class="tool-card"><div class="tool-icon"></div><h4>QC Checker</h4><p>Curabitur cursus metus nisi, congue placerat lacus posuere et. Nulla ultricies eu elit eu commodo.</p><span class="tool-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Dynamically rendered from data/tools.json -->
             </div>
         </div>
     </section>

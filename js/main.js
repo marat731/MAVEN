@@ -4,7 +4,6 @@
    ===================================================== */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize based on current page
     if (document.querySelector('.login-page')) {
         initLoginPage();
     }
@@ -19,26 +18,76 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* =====================================================
+   DATA FETCHING
+   ===================================================== */
+
+function fetchToolsData() {
+    return fetch('data/tools.json')
+        .then(function(response) { return response.json(); });
+}
+
+/* =====================================================
+   RENDERING HELPERS
+   ===================================================== */
+
+function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+}
+
+function renderToolCardHTML(tool, activeToolId) {
+    var activeClass = (tool.id === activeToolId) ? ' tool-card--active' : '';
+    return '<a href="tool.html?id=' + encodeURIComponent(tool.id) + '" class="tool-card' + activeClass + '">' +
+        '<div class="tool-icon"></div>' +
+        '<h4>' + escapeHtml(tool.name) + '</h4>' +
+        '<p>' + escapeHtml(tool.description) + '</p>' +
+        '<span class="tool-arrow">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                '<line x1="5" y1="12" x2="19" y2="12"></line>' +
+                '<polyline points="12 5 19 12 12 19"></polyline>' +
+            '</svg>' +
+        '</span>' +
+    '</a>';
+}
+
+function renderCategoriesHTML(data, activeToolId) {
+    var html = '';
+    data.categories.forEach(function(category) {
+        html += '<div class="category" data-category="' + escapeHtml(category.id) + '">';
+        html += '<div class="category-header">';
+        html += '<h3>' + escapeHtml(category.name) + '</h3>';
+        html += '<svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+        html += '<polyline points="6 9 12 15 18 9"></polyline>';
+        html += '</svg>';
+        html += '</div>';
+        html += '<div class="category-content"><div class="category-content-inner"><div class="tools-grid">';
+        category.tools.forEach(function(tool) {
+            html += renderToolCardHTML(tool, activeToolId);
+        });
+        html += '</div></div></div>';
+        html += '</div>';
+    });
+    return html;
+}
+
+/* =====================================================
    LOGIN PAGE
    ===================================================== */
 
 function initLoginPage() {
-    const loginForm = document.getElementById('loginForm');
+    var loginForm = document.getElementById('loginForm');
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Demo login - accepts any credentials
-            const email = loginForm.querySelector('input[type="email"]').value;
-            const password = loginForm.querySelector('input[type="password"]').value;
+            var email = loginForm.querySelector('input[type="email"]').value;
+            var password = loginForm.querySelector('input[type="password"]').value;
 
             if (email && password) {
-                // Store simple session flag (demo purposes only)
                 sessionStorage.setItem('maven_logged_in', 'true');
                 sessionStorage.setItem('maven_user', email);
-
-                // Redirect to directory
                 window.location.href = 'directory.html';
             }
         });
@@ -50,17 +99,93 @@ function initLoginPage() {
    ===================================================== */
 
 function initDirectoryPage() {
-    // Check if user is logged in (demo purposes)
-    // Uncomment the following to enforce login:
-    // if (!sessionStorage.getItem('maven_logged_in')) {
-    //     window.location.href = 'index.html';
-    //     return;
-    // }
+    fetchToolsData().then(function(data) {
+        var container = document.querySelector('.categories-container');
+        container.innerHTML = renderCategoriesHTML(data);
 
-    initCategoryToggles();
-    initSearch();
-    initScrollIndicator();
-    initScrollToTop();
+        initCategoryToggles();
+        initSearch();
+        initScrollIndicator();
+        initScrollToTop();
+    });
+}
+
+/* =====================================================
+   TOOL PAGE
+   ===================================================== */
+
+function initToolPage() {
+    var params = new URLSearchParams(window.location.search);
+    var toolId = params.get('id');
+
+    if (!toolId) {
+        window.location.href = 'directory.html';
+        return;
+    }
+
+    fetchToolsData().then(function(data) {
+        // Find tool and its category
+        var foundTool = null;
+        var foundCategory = null;
+        data.categories.forEach(function(category) {
+            category.tools.forEach(function(tool) {
+                if (tool.id === toolId) {
+                    foundTool = tool;
+                    foundCategory = category;
+                }
+            });
+        });
+
+        if (!foundTool) {
+            window.location.href = 'directory.html';
+            return;
+        }
+
+        // Set page title
+        document.title = 'MAVEN - ' + foundTool.name;
+
+        // Populate breadcrumb
+        var breadcrumbLink = document.getElementById('breadcrumbLink');
+        breadcrumbLink.textContent = foundCategory.name;
+
+        // Populate title
+        document.getElementById('toolTitle').textContent = foundTool.name;
+
+        // Populate access button
+        document.getElementById('toolAccessBtn').href = foundTool.accessUrl;
+
+        // Populate content sections
+        var detail = foundTool.detail;
+        var contentHTML = '';
+
+        contentHTML += '<div class="tool-section">';
+        contentHTML += '<span class="tool-section-label">What it is:</span>';
+        contentHTML += '<p>' + escapeHtml(detail.whatItIs) + '</p>';
+        contentHTML += '</div>';
+
+        contentHTML += '<div class="tool-section">';
+        contentHTML += '<span class="tool-section-label">What it does:</span>';
+        contentHTML += '<ul>';
+        detail.whatItDoes.forEach(function(item) {
+            contentHTML += '<li>' + escapeHtml(item) + '</li>';
+        });
+        contentHTML += '</ul>';
+        contentHTML += '</div>';
+
+        contentHTML += '<div class="tool-section">';
+        contentHTML += '<span class="tool-section-label">Why it matters:</span>';
+        contentHTML += '<p>' + escapeHtml(detail.whyItMatters) + '</p>';
+        contentHTML += '</div>';
+
+        document.getElementById('toolContent').innerHTML = contentHTML;
+
+        // Render browse-more categories with current tool highlighted
+        var browseContainer = document.querySelector('.browse-section .categories-container');
+        browseContainer.innerHTML = renderCategoriesHTML(data, toolId);
+
+        initCategoryToggles();
+        initSearch();
+    });
 }
 
 /* =====================================================
@@ -68,13 +193,11 @@ function initDirectoryPage() {
    ===================================================== */
 
 function initCategoryToggles() {
-    const categoryHeaders = document.querySelectorAll('.category-header');
+    var categoryHeaders = document.querySelectorAll('.category-header');
 
-    categoryHeaders.forEach(header => {
+    categoryHeaders.forEach(function(header) {
         header.addEventListener('click', function() {
-            const category = this.closest('.category');
-
-            // Toggle current category
+            var category = this.closest('.category');
             category.classList.toggle('open');
         });
     });
@@ -85,27 +208,28 @@ function initCategoryToggles() {
    ===================================================== */
 
 function initSearch() {
-    const searchInput = document.getElementById('searchInput');
+    var searchInput = document.getElementById('searchInput');
 
     if (!searchInput) return;
 
+    var container = document.querySelector('.categories-container');
+
     // Create no results message
-    const noResultsMsg = document.createElement('div');
+    var noResultsMsg = document.createElement('div');
     noResultsMsg.className = 'no-results';
     noResultsMsg.textContent = 'No tools found matching your search.';
-    document.querySelector('.categories-container').appendChild(noResultsMsg);
+    container.appendChild(noResultsMsg);
 
     searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        const allToolCards = document.querySelectorAll('.tool-card');
-        const allCategories = document.querySelectorAll('.category');
+        var searchTerm = this.value.toLowerCase().trim();
+        var allToolCards = document.querySelectorAll('.tool-card');
+        var allCategories = document.querySelectorAll('.category');
 
         if (searchTerm === '') {
-            // Reset everything when search is empty
-            allToolCards.forEach(card => {
+            allToolCards.forEach(function(card) {
                 card.classList.remove('hidden', 'highlight');
             });
-            allCategories.forEach(category => {
+            allCategories.forEach(function(category) {
                 category.classList.remove('open');
                 category.style.display = '';
             });
@@ -113,15 +237,15 @@ function initSearch() {
             return;
         }
 
-        let totalMatches = 0;
+        var totalMatches = 0;
 
-        allCategories.forEach(category => {
-            const toolCards = category.querySelectorAll('.tool-card');
-            let categoryMatches = 0;
+        allCategories.forEach(function(category) {
+            var toolCards = category.querySelectorAll('.tool-card');
+            var categoryMatches = 0;
 
-            toolCards.forEach(card => {
-                const toolName = card.querySelector('h4').textContent.toLowerCase();
-                const toolDesc = card.querySelector('p').textContent.toLowerCase();
+            toolCards.forEach(function(card) {
+                var toolName = card.querySelector('h4').textContent.toLowerCase();
+                var toolDesc = card.querySelector('p').textContent.toLowerCase();
 
                 if (toolName.includes(searchTerm) || toolDesc.includes(searchTerm)) {
                     card.classList.remove('hidden');
@@ -134,7 +258,6 @@ function initSearch() {
                 }
             });
 
-            // Show/hide and expand categories based on matches
             if (categoryMatches > 0) {
                 category.style.display = '';
                 category.classList.add('open');
@@ -143,7 +266,6 @@ function initSearch() {
             }
         });
 
-        // Show no results message if needed
         if (totalMatches === 0) {
             noResultsMsg.classList.add('visible');
         } else {
@@ -151,7 +273,6 @@ function initSearch() {
         }
     });
 
-    // Handle Enter key
     searchInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -164,11 +285,11 @@ function initSearch() {
    ===================================================== */
 
 function initScrollIndicator() {
-    const scrollIndicator = document.querySelector('.scroll-indicator');
+    var scrollIndicator = document.querySelector('.scroll-indicator');
 
     if (scrollIndicator) {
         scrollIndicator.addEventListener('click', function() {
-            const directorySection = document.querySelector('.directory-section');
+            var directorySection = document.querySelector('.directory-section');
             if (directorySection) {
                 directorySection.scrollIntoView({ behavior: 'smooth' });
             }
@@ -181,7 +302,7 @@ function initScrollIndicator() {
    ===================================================== */
 
 function initScrollToTop() {
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    var scrollTopBtn = document.getElementById('scrollTopBtn');
 
     if (scrollTopBtn) {
         scrollTopBtn.addEventListener('click', function(e) {
@@ -189,15 +310,6 @@ function initScrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
-}
-
-/* =====================================================
-   TOOL PAGE
-   ===================================================== */
-
-function initToolPage() {
-    initCategoryToggles();
-    initSearch();
 }
 
 /* =====================================================
