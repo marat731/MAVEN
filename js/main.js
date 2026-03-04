@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.directory-page')) {
         initDirectoryPage();
     }
+
+    if (document.querySelector('.tool-page')) {
+        initToolPage();
+    }
 });
 
 /* =====================================================
@@ -185,6 +189,15 @@ function initScrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+}
+
+/* =====================================================
+   TOOL PAGE
+   ===================================================== */
+
+function initToolPage() {
+    initCategoryToggles();
+    initSearch();
 }
 
 /* =====================================================
