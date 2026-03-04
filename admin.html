@@ -300,6 +300,7 @@
             <span>Admin</span>
         </div>
         <div class="admin-nav-actions">
+            <button class="btn btn-secondary" id="resetBtn">Reset to Defaults</button>
             <button class="btn btn-export" id="exportBtn">Export JSON</button>
         </div>
     </nav>
@@ -725,6 +726,19 @@
             document.getElementById('toolFormOverlay').classList.remove('active');
             autoSave();
             renderAll();
+        });
+
+        // --- Reset to defaults ---
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (!confirm('Reset all data to the original defaults? This will discard any changes you\'ve made.')) return;
+            localStorage.removeItem('maven_tools_data');
+            fetch('data/tools.json')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    data = d;
+                    autoSave();
+                    renderAll();
+                });
         });
 
         // --- Export ---
