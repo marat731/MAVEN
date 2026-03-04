@@ -18,27 +18,39 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* =====================================================
-   DATA FETCHING
+   DATA LOADING
    ===================================================== */
 
-function fetchToolsData() {
-    // 1. Check localStorage first (set by admin page)
-    var stored = localStorage.getItem('maven_tools_data');
-    if (stored) {
-        try {
+function getToolsData() {
+    // Check if data has real tools (not just empty category shells)
+    function isValidData(d) {
+        if (!d || !d.categories || d.categories.length === 0) return false;
+        // Ensure at least one category has tools
+        for (var i = 0; i < d.categories.length; i++) {
+            if (d.categories[i].tools && d.categories[i].tools.length > 0) return true;
+        }
+        return false;
+    }
+
+    // 1. Try localStorage (admin page may have updated data)
+    try {
+        var stored = localStorage.getItem('maven_tools_data');
+        if (stored) {
             var parsed = JSON.parse(stored);
-            if (parsed && parsed.categories && parsed.categories.length > 0) {
-                return Promise.resolve(parsed);
-            }
-        } catch (e) { /* fall through */ }
+            if (isValidData(parsed)) return parsed;
+            // Bad data in localStorage — remove it
+            localStorage.removeItem('maven_tools_data');
+        }
+    } catch (e) {
+        localStorage.removeItem('maven_tools_data');
     }
-    // 2. Use inline script data (tools.js) — works on file:// and avoids fetch issues
-    if (typeof MAVEN_TOOLS_DATA !== 'undefined' && MAVEN_TOOLS_DATA.categories) {
-        return Promise.resolve(MAVEN_TOOLS_DATA);
+
+    // 2. Use inline script data (tools.js loaded via <script> tag)
+    if (typeof MAVEN_TOOLS_DATA !== 'undefined' && isValidData(MAVEN_TOOLS_DATA)) {
+        return MAVEN_TOOLS_DATA;
     }
-    // 3. Last resort: fetch from JSON file
-    return fetch('data/tools.json')
-        .then(function(response) { return response.json(); });
+
+    return null;
 }
 
 /* =====================================================
@@ -114,15 +126,26 @@ function initLoginPage() {
    ===================================================== */
 
 function initDirectoryPage() {
-    fetchToolsData().then(function(data) {
+    function render(data) {
         var container = document.querySelector('.categories-container');
+        if (!container) return;
         container.innerHTML = renderCategoriesHTML(data);
-
         initCategoryToggles();
         initSearch();
         initScrollIndicator();
         initScrollToTop();
-    });
+    }
+
+    var data = getToolsData();
+    if (data) {
+        render(data);
+    } else {
+        // Fallback: fetch from JSON (for server-hosted environments)
+        fetch('data/tools.json')
+            .then(function(r) { return r.json(); })
+            .then(render)
+            .catch(function(e) { console.error('MAVEN: Failed to load tools data', e); });
+    }
 }
 
 /* =====================================================
@@ -138,7 +161,7 @@ function initToolPage() {
         return;
     }
 
-    fetchToolsData().then(function(data) {
+    function render(data) {
         // Find tool and its category
         var foundTool = null;
         var foundCategory = null;
@@ -196,11 +219,23 @@ function initToolPage() {
 
         // Render browse-more categories with current tool highlighted
         var browseContainer = document.querySelector('.browse-section .categories-container');
-        browseContainer.innerHTML = renderCategoriesHTML(data, toolId);
+        if (browseContainer) {
+            browseContainer.innerHTML = renderCategoriesHTML(data, toolId);
+        }
 
         initCategoryToggles();
         initSearch();
-    });
+    }
+
+    var data = getToolsData();
+    if (data) {
+        render(data);
+    } else {
+        fetch('data/tools.json')
+            .then(function(r) { return r.json(); })
+            .then(render)
+            .catch(function(e) { console.error('MAVEN: Failed to load tools data', e); });
+    }
 }
 
 /* =====================================================
